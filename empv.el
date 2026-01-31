@@ -3495,7 +3495,7 @@ lyrics with the buffers content."
     (user-error "File not found: '%s'" file))
   (let ((lyrics-file (make-temp-file "empv-lyrics" nil ".txt" lyrics)))
     (set-process-filter
-     (start-process " *empv-eyeD3*" nil "eyeD3" "--encoding" "utf8" "--add-lyrics" lyrics-file file)
+     (start-process " *empv-eyeD3*" " *empv-eyeD3*" "eyeD3" "--encoding" "utf8" "--add-lyrics" lyrics-file file)
      (lambda (proc out)
        (empv--dbg "*eyeD3* output: %s" out)
        (if (eq (process-exit-status proc) 0)
