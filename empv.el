@@ -794,31 +794,37 @@ IT can be a symbol or string.
   "Wait until the PLACE is non-nil, after executing FORMS.
 CONFIG is (PLACE MAX-TRY-COUNT WAIT-TIME).  FORMS are executed once."
   (declare (indent 1))
-  `(let (,(car config)
-         (__max-try-count (or ,(nth 1 config) 500))
-         (__wait-time (or ,(nth 2 config) 0.01))
-         (__try-count 0))
-     ,@forms
-     (while (and (not ,(car config)) (< __try-count __max-try-count))
-       (setq __try-count (1+ __try-count))
-       (sleep-for __wait-time))
-     ,(car config)))
+  (let ((max-try-count (gensym "max-try-count-"))
+        (wait-time (gensym "wait-time-"))
+        (try-count (gensym "try-count-")))
+    `(let (,(car config)
+           (,max-try-count (or ,(nth 1 config) 500))
+           (,wait-time (or ,(nth 2 config) 0.01))
+           (,try-count 0))
+       ,@forms
+       (while (and (not ,(car config)) (< ,try-count ,max-try-count))
+         (setq ,try-count (1+ ,try-count))
+         (sleep-for ,wait-time))
+       ,(car config))))
 
 (cl-defmacro empv--try-until-non-nil (config &rest forms)
   "Run FORMS until PLACE becomes non-nil.
 CONFIG is (PLACE MAX-TRY-COUNT WAIT-TIME).  FORMS are executed in a loop
 until they are non-nil."
   (declare (indent 1))
-  `(let (,(car config)
-         (__max-try-count (or ,(nth 1 config) 500))
-         (__wait-time (or ,(nth 2 config) 0.01))
-         (__try-count 0))
-     ,@forms
-     (while (and (not ,(car config)) (< __try-count __max-try-count))
-       (setq __try-count (1+ __try-count))
-       (sleep-for __wait-time)
-       ,@forms)
-     result))
+  (let ((max-try-count (gensym "max-try-count-"))
+        (wait-time (gensym "wait-time-"))
+        (try-count (gensym "try-count-")))
+    `(let (,(car config)
+           (,max-try-count (or ,(nth 1 config) 500))
+           (,wait-time (or ,(nth 2 config) 0.01))
+           (,try-count 0))
+       ,@forms
+       (while (and (not ,(car config)) (< ,try-count ,max-try-count))
+         (setq ,try-count (1+ ,try-count))
+         (sleep-for ,wait-time)
+         ,@forms)
+       ,(car config))))
 
 ;;;; Utility: empv
 
