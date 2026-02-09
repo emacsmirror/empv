@@ -307,6 +307,17 @@ empv also brings a simple [[https://github.com/abo-abo/hydra][Hydra]] configurat
   (bind-key "C-x M" 'empv-hydra/body)
 #+end_src
 
+** mpv extensions
+
+mpv itself is an highly extendable media player with lot's of useful scripts out there. Here are some plugins/scripts that may enhance your mpv experience and have a good synergy with empv:
+
+- [[https://github.com/hoyon/mpv-mpris][mpv-mpris]] :: This integrates mpv with system level media keys, media displays etc. Highly recommended.
+- [[https://github.com/bitingsock/ytdl-preload][ytdl-preload]] :: Caches next entries in your playlist which makes switching between playlist items seamless.
+- [[https://github.com/tomasklaen/uosc][uosc]] :: UI for mpv. Very minimalist yet feature-packed. You can even switch between YouTube qualities dynamically from the UI. (You can toggle mpv UI with ~empv-toggle-video~.)
+- [[https://codeberg.org/jouni/mpv_sponsorblock_minimal][mpv_sponsorblock_minimal]] :: [[https://sponsor.ajay.app/][SponsorBlock]] plugin for mpv!
+
+These are what I use, check out [[https://github.com/mpv-player/mpv/wiki/User-Scripts][mpv user scripts]] page if you are interested in other stuff.
+
 * Screenshots
 :PROPERTIES:
 :CUSTOM_ID: screenshots
